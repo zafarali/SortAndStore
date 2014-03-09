@@ -79,9 +79,9 @@ public class Sort{
 	public static void quick(int[] toSort){
 	/*Q U I C K   S O R T
 	I can't even explain whats happening here. Magic of recursion.
-	*/
+	helper methods: partition and swap*/
 		btsqs(toSort, 0, toSort.length-1);
-	}
+	}//end quick
 
 	//behind the scenes quick sort (btsqs)
 	private static void btsqs(int[] toSort, int leftIndex, int rightIndex){
@@ -90,8 +90,9 @@ public class Sort{
 			btsqs(toSort, leftIndex, q);
 			btsqs(toSort, q+1, rightIndex);
 		}
-	}
+	}//end btsqs
 
+	// H E L P E R   M E T H O D S
 	private static int partition(int[] toSort, int leftIndex, int rightIndex){
 	//this method makes sure all elements are sorted before and after a certain element in the list
 		int x = toSort[leftIndex];
@@ -112,8 +113,7 @@ public class Sort{
 				return j;
 			}
 		}
-	}
-	// H E L P E R   M E T H O D S
+	}//end partition
 	private static int maxIndex(int[] a, int limit){
 		int iMax = 0; 
 		int eMax = a[0]; 
@@ -130,7 +130,7 @@ public class Sort{
 		int temp = a[targetIndex];
 		a[targetIndex] = a[originIndex];
 		a[originIndex] = temp;
-	}
+	}//end swap
 
 /*WARNING THIS DOESNT WORK*/
 	private static void combine(int[] toCombine, int leftIndex, int midpoint, int rightIndex){
@@ -165,15 +165,7 @@ public class Sort{
 
 	}//end combine
 
-	// T E S T I N G 
-	public static void main(String[] args){
-		int[] a = {10};
-		p("before: ");
-		p(a);
-		quick(a);
-		p("after:");
-		p(a);
-	}//end main
+
 
 
 	//NOT RELATED TO SORTING ANYTHING 

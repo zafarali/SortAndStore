@@ -41,10 +41,35 @@ public class Search{
 	}
 
 	//binary search using recursion
+	//behind the scenes implimentation
+	private static int btsrb(int[] a, int t, int l, int r){
+		//escape case:
+		if(l>r) return -1;
+
+		//checking the middle
+		int mid = (l + r)/2;
+		if (a[mid] == t) return mid;
+
+		//if the middle is larger than the target, we need to check first half
+		if (a[mid] > t)
+			return btsrb(a, t, l, mid-1);
+		return btsrb(a,t,mid+1,r);
+	}
+	//signature for you to use
 	public static int rbinary(int[] toSearch, int target){
 		//initialize the important indexing variables.
 		int left = 0;
 		int right = toSearch.length -1;
-		int mid;
+		return btsrb(toSearch, target, left, right);
 	}
+
+
+	/*public static void main(String[] args){
+		int[] tos = {1, 2, 3, 4};
+		System.out.println(linear(tos, 2));
+		System.out.println(binary(tos, 2));
+		System.out.println(rbinary(tos, 2));
+
+
+	}*/
 }

@@ -39,8 +39,7 @@ public class Sort{
 	public static void insertion(int[] toSort){
 	/* I N S E R T I O N   S O R T 
 	sorts in place by removing individual elements at i from the array
-	finds the appropriate location for i in the front of the array
-	*/
+	finds the appropriate location for i in the front of the array*/
 		for(int i = 1; i < toSort.length; i++){//note 1, by default an array of one element is sorted
 			int toInsert = toSort[i]; //select the element to be inserted correctly
 			int k = i; //set the index for our search!
@@ -55,6 +54,28 @@ public class Sort{
 			toSort[k] = toInsert;//insert the element to
 		}//endfor	
 	}//end insertion
+
+	public static void merge(int[] toSort){
+	/* M E R G E   S O R T
+	divide the array into two halves
+	sort each individual array using merge sort(implemented in btsms) i.e. recusion magic
+	combine the results of the individual arrays by 'merging it'.
+	Helper Method: combine to merge the arrays*/
+		btsms(toSort, 0, toSort.length-1); 
+	}
+
+	//behind the scenes merge sort (btsms)
+	private static void btsms(int[] toSort, int leftIndex, int rightIndex){
+	//this method sorts between the left and right indexes.
+		p("conducting merge sort between "+leftIndex+ " and "+rightIndex);
+		if(leftIndex<rightIndex){ //escape case.
+			int mid = (leftIndex+rightIndex)/2;
+			btsms(toSort, leftIndex, mid);
+			btsms(toSort, mid+1, rightIndex);
+			//the heavy lifting happens in our combine method
+			combine(toSort, leftIndex, mid, rightIndex);
+		}
+	}//end btsms
 
 
 	// H E L P E R   M E T H O D S
@@ -75,6 +96,43 @@ public class Sort{
 		a[targetIndex] = a[originIndex];
 		a[originIndex] = temp;
 	}
+
+	private static void combine(int[] toCombine, int leftIndex, int midpoint, int rightIndex){
+	//we assume that toCombine is sorted between leftIndex and midpoint and midpoint+1 and the rightIndex
+		int[] tempArray = new int[rightIndex-leftIndex+1]; //holds the temporily sorted array.
+		int i = leftIndex; //our left finger.
+		int j = midpoint+1; //our middle finger.
+		int k = 0; //keeps track of our location in the temp array
+		//we now go over the two sorted halfs of the array and place them in the right order
+		while(i<=midpoint && j <= rightIndex){//while we havent overshot our limits keep sorting.
+			if(toCombine[i] <= toCombine[j]){
+				//we know that the element (at j) in the second half is larger than the one in the first half
+				//we now push that first one (at i) into the tempArray
+				tempArray[k] = toCombine[i];
+				i = i + 1; //increment our finger to check the next element
+			}else if(toCombine[i] > toCombine[j]){
+				//we know that the element (at i) in the first half is larger than the one in the second half
+				//we now push that element (at j) into the tempArray
+				tempArray[k] = toCombine[j];
+				j = j + 1;//increment our finger to check the next element
+			}
+			p(tempArray);
+			k = k+1; //moves our location in the temporary array
+		}//end while
+
+
+			p("to combine was: ");
+			p(toCombine);
+		//we now need to copy back our temp array into toCombine
+		for(k = 1; k < rightIndex-leftIndex; k++){
+			toCombine[k+leftIndex-1] = tempArray[k-1];
+		}//end for
+			p("temparray was: ");p(tempArray);
+			p("copied tempArray into toCombine");
+			p("to combine is: ");
+			p(toCombine);
+	}//end combine
+
 	// T E S T I N G 
 	public static void main(String[] args){
 

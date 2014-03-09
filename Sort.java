@@ -2,10 +2,10 @@ public class Sort{
 //nothing to sort yet!
 
 	public static void bubble(int[] toSort){
-		/* B U B B L E   S O  R T 
-		Works by checking consecutive pairs of members and swapping them
-		if one is bigger than the other.
-		Note: There is a better version of bubble sort available */
+	/* B U B B L E   S O  R T 
+	Works by checking consecutive pairs of members and swapping them
+	if one is bigger than the other.
+	Note: There is a better version of bubble sort available */
 		boolean swapped = true;
 		/* The use of swapped:
 		We have a swapped boolean to show that we made a change in the array.
@@ -24,11 +24,10 @@ public class Sort{
 	}//end bubble
 
 	public static void selection(int[] toSort){//toSort is unique
-		/* S E L E C T I O N   S O R T
-		Finds the max element and puts it into the last position of the array.
-		Sorts the remaining array (n-1)
-		Two helper methods: find max index and swap
-		*/
+	/* S E L E C T I O N   S O R T
+	Finds the max element and puts it into the last position of the array.
+	Sorts the remaining array (n-1)
+	Two helper methods: find max index and swap */
 		int lastIndex = toSort.length - 1; //index of the last element
 		while(lastIndex > 0){
 			int indexMax = maxIndex(toSort, lastIndex); //sets the index of the maximum element
@@ -36,6 +35,27 @@ public class Sort{
 			lastIndex = lastIndex - 1; //the last index no longer needs to be checked
 		}//end while
 	}//end selection
+
+	public static void insertion(int[] toSort){
+	/* I N S E R T I O N    S O R T 
+	sorts in place by removing individual elements from the array
+	replaces the array in a sorted list in front of the unsorted element
+	*/
+		for(int i = 1; i < toSort.length; i++){//note 1, by default an array of one element is sorted
+			int toInsert = toSort[i]; //select the element to be inserted correctly
+			int k = i; //set the index for our search!
+			//where do we place this element?
+			//this while loop looks through the front of the array for the correct location to insert it
+			while((k > 0 ) && toInsert < toSort[k-1]){
+				//makes sure we move the indexes as long as the elements being checked
+				//are larger than what we have to insert
+				toSort[k] = toSort[k-1];//shift the element at the index
+				k = k-1;//shift the index
+			}//endwhile
+			toSort[k] = toInsert;//insert the element to
+		}//endfor	
+	}//end insertion
+
 
 	// H E L P E R   M E T H O D S
 	private static int maxIndex(int[] a, int limit){
@@ -57,7 +77,9 @@ public class Sort{
 	}
 	// T E S T I N G 
 	public static void main(String[] args){
-
+	 	int[] a = {1,2,5,5,9,1,1,10,2,5,3};
+	 	insertion(a);
+	 	p(a);
 	}//end main
 
 

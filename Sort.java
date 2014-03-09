@@ -37,9 +37,9 @@ public class Sort{
 	}//end selection
 
 	public static void insertion(int[] toSort){
-	/* I N S E R T I O N    S O R T 
-	sorts in place by removing individual elements from the array
-	replaces the array in a sorted list in front of the unsorted element
+	/* I N S E R T I O N   S O R T 
+	sorts in place by removing individual elements at i from the array
+	finds the appropriate location for i in the front of the array
 	*/
 		for(int i = 1; i < toSort.length; i++){//note 1, by default an array of one element is sorted
 			int toInsert = toSort[i]; //select the element to be inserted correctly
@@ -77,9 +77,7 @@ public class Sort{
 	}
 	// T E S T I N G 
 	public static void main(String[] args){
-	 	int[] a = {1,2,5,5,9,1,1,10,2,5,3};
-	 	insertion(a);
-	 	p(a);
+
 	}//end main
 
 

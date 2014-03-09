@@ -67,7 +67,6 @@ public class Sort{
 	//behind the scenes merge sort (btsms)
 	private static void btsms(int[] toSort, int leftIndex, int rightIndex){
 	//this method sorts between the left and right indexes.
-		p("conducting merge sort between "+leftIndex+ " and "+rightIndex);
 		if(leftIndex<rightIndex){ //escape case.
 			int mid = (leftIndex+rightIndex)/2;
 			btsms(toSort, leftIndex, mid);
@@ -77,7 +76,43 @@ public class Sort{
 		}
 	}//end btsms
 
+	public static void quick(int[] toSort){
+	/*Q U I C K   S O R T
+	I can't even explain whats happening here. Magic of recursion.
+	*/
+		btsqs(toSort, 0, toSort.length-1);
+	}
 
+	//behind the scenes quick sort (btsqs)
+	private static void btsqs(int[] toSort, int leftIndex, int rightIndex){
+		if(leftIndex < rightIndex){//escape case
+			int q = partition(toSort, leftIndex, rightIndex);
+			btsqs(toSort, leftIndex, q);
+			btsqs(toSort, q+1, rightIndex);
+		}
+	}
+
+	private static int partition(int[] toSort, int leftIndex, int rightIndex){
+	//this method makes sure all elements are sorted before and after a certain element in the list
+		int x = toSort[leftIndex];
+		int i = leftIndex-1;
+		int j = rightIndex+1;
+		while(true){
+			do{
+			i=i+1;
+			}while(!(toSort[i] >= x));
+
+			do{
+			j = j-1;
+
+			}while(!(toSort[j] <= x));
+			if(i<j){
+				swap(toSort, i, j);
+			}else{
+				return j;
+			}
+		}
+	}
 	// H E L P E R   M E T H O D S
 	private static int maxIndex(int[] a, int limit){
 		int iMax = 0; 
@@ -97,6 +132,7 @@ public class Sort{
 		a[originIndex] = temp;
 	}
 
+/*WARNING THIS DOESNT WORK*/
 	private static void combine(int[] toCombine, int leftIndex, int midpoint, int rightIndex){
 	//we assume that toCombine is sorted between leftIndex and midpoint and midpoint+1 and the rightIndex
 		int[] tempArray = new int[rightIndex-leftIndex+1]; //holds the temporily sorted array.
@@ -105,37 +141,38 @@ public class Sort{
 		int k = 0; //keeps track of our location in the temp array
 		//we now go over the two sorted halfs of the array and place them in the right order
 		while(i<=midpoint && j <= rightIndex){//while we havent overshot our limits keep sorting.
+						p(tempArray);
+
 			if(toCombine[i] <= toCombine[j]){
 				//we know that the element (at j) in the second half is larger than the one in the first half
 				//we now push that first one (at i) into the tempArray
 				tempArray[k] = toCombine[i];
 				i = i + 1; //increment our finger to check the next element
-			}else if(toCombine[i] > toCombine[j]){
+			}else if(toCombine[j] < toCombine[i]){
 				//we know that the element (at i) in the first half is larger than the one in the second half
 				//we now push that element (at j) into the tempArray
 				tempArray[k] = toCombine[j];
 				j = j + 1;//increment our finger to check the next element
 			}
-			p(tempArray);
-			k = k+1; //moves our location in the temporary array
+
+			k = k+1; //moves our k location in the temporary array
 		}//end while
 
-
-			p("to combine was: ");
-			p(toCombine);
 		//we now need to copy back our temp array into toCombine
-		for(k = 1; k < rightIndex-leftIndex; k++){
-			toCombine[k+leftIndex-1] = tempArray[k-1];
+		for(int o = 1; o < rightIndex-leftIndex+1; o++){
+			toCombine[o+leftIndex-1] = tempArray[o-1];
 		}//end for
-			p("temparray was: ");p(tempArray);
-			p("copied tempArray into toCombine");
-			p("to combine is: ");
-			p(toCombine);
+
 	}//end combine
 
 	// T E S T I N G 
 	public static void main(String[] args){
-
+		int[] a = {10};
+		p("before: ");
+		p(a);
+		quick(a);
+		p("after:");
+		p(a);
 	}//end main
 
 

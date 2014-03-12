@@ -55,26 +55,7 @@ public class Sort{
 		}//endfor	
 	}//end insertion
 
-	public static void merge(int[] toSort){
-	/* M E R G E   S O R T
-	divide the array into two halves
-	sort each individual array using merge sort(implemented in btsms) i.e. recusion magic
-	combine the results of the individual arrays by 'merging it'.
-	Helper Method: combine to merge the arrays*/
-		btsms(toSort, 0, toSort.length-1); 
-	}
-
-	//behind the scenes merge sort (btsms)
-	private static void btsms(int[] toSort, int leftIndex, int rightIndex){
-	//this method sorts between the left and right indexes.
-		if(leftIndex<rightIndex){ //escape case.
-			int mid = (leftIndex+rightIndex)/2;
-			btsms(toSort, leftIndex, mid);
-			btsms(toSort, mid+1, rightIndex);
-			//the heavy lifting happens in our combine method
-			combine(toSort, leftIndex, mid, rightIndex);
-		}
-	}//end btsms
+	
 
 	public static void quick(int[] toSort){
 	/*Q U I C K   S O R T
@@ -131,39 +112,6 @@ public class Sort{
 		a[targetIndex] = a[originIndex];
 		a[originIndex] = temp;
 	}//end swap
-
-/*WARNING THIS DOESNT WORK*/
-	private static void combine(int[] toCombine, int leftIndex, int midpoint, int rightIndex){
-	//we assume that toCombine is sorted between leftIndex and midpoint and midpoint+1 and the rightIndex
-		int[] tempArray = new int[rightIndex-leftIndex+1]; //holds the temporily sorted array.
-		int i = leftIndex; //our left finger.
-		int j = midpoint+1; //our middle finger.
-		int k = 0; //keeps track of our location in the temp array
-		//we now go over the two sorted halfs of the array and place them in the right order
-		while(i<=midpoint && j <= rightIndex){//while we havent overshot our limits keep sorting.
-						p(tempArray);
-
-			if(toCombine[i] <= toCombine[j]){
-				//we know that the element (at j) in the second half is larger than the one in the first half
-				//we now push that first one (at i) into the tempArray
-				tempArray[k] = toCombine[i];
-				i = i + 1; //increment our finger to check the next element
-			}else if(toCombine[j] < toCombine[i]){
-				//we know that the element (at i) in the first half is larger than the one in the second half
-				//we now push that element (at j) into the tempArray
-				tempArray[k] = toCombine[j];
-				j = j + 1;//increment our finger to check the next element
-			}
-
-			k = k+1; //moves our k location in the temporary array
-		}//end while
-
-		//we now need to copy back our temp array into toCombine
-		for(int o = 1; o < rightIndex-leftIndex+1; o++){
-			toCombine[o+leftIndex-1] = tempArray[o-1];
-		}//end for
-
-	}//end combine
 
 
 
